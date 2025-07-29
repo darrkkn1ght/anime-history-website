@@ -131,23 +131,35 @@ export interface StudioFounder {
     nameJapanese?: string;
     nameEnglish?: string;
     alternativeNames?: string[];
+    description?: string;
     
     // Studio Details
-    founded: string; // ISO date string
-    founders: StudioFounder[];
-    headquarters: StudioLocation;
+    founded: number | string; // Year as number or ISO date string
+    founder?: string;
+    founders?: StudioFounder[];
+    headquarters?: StudioLocation;
     additionalLocations?: StudioLocation[];
     
     // Status and Operations
-    status: 'active' | 'inactive' | 'merged' | 'acquired' | 'bankrupt' | 'restructured';
+    status: 'active' | 'inactive' | 'merged' | 'acquired' | 'bankrupt' | 'restructured' | 'defunct';
     closureDate?: string; // ISO date string
     parentCompany?: string;
     subsidiaries?: string[];
     
     // Production Information
-    totalProductions: number;
-    notableWorks: StudioProduction[];
-    genreSpecialties: StudioGenreSpecialty[];
+    totalProductions?: number;
+    notableWorks?: StudioProduction[];
+    genreSpecialties?: StudioGenreSpecialty[];
+    keyWorks?: string[];
+    notableContributions?: string[];
+    location?: string;
+    backgroundImage?: string;
+    colorPalette?: {
+      primary: string;
+      secondary: string;
+      accent: string;
+    };
+    stats?: StudioStats;
     productionCapacity?: {
       simultaneousProjects: number;
       annualOutput: number;
@@ -155,9 +167,9 @@ export interface StudioFounder {
     };
     
     // Technical Capabilities
-    technology: StudioTechnology;
-    animationStyle: ('traditional' | 'digital' | 'mixed' | 'cgi' | '3d')[];
-    signature: {
+    technology?: StudioTechnology;
+    animationStyle?: ('traditional' | 'digital' | 'mixed' | 'cgi' | '3d')[];
+    signature?: {
       visualStyle?: string;
       narrativeStyle?: string;
       characterDesign?: string;
@@ -167,7 +179,7 @@ export interface StudioFounder {
     
     // Business Information
     financials?: StudioFinancials;
-    partnerships: StudioPartnership[];
+    partnerships?: StudioPartnership[];
     distributionDeals?: {
       distributor: string;
       regions: string[];
@@ -177,16 +189,16 @@ export interface StudioFounder {
     }[];
     
     // Recognition and Impact
-    awards: StudioAward[];
-    milestones: StudioMilestone[];
-    industryImpact: {
+    awards?: StudioAward[];
+    milestones?: StudioMilestone[];
+    industryImpact?: {
       level: 'revolutionary' | 'highly-influential' | 'influential' | 'moderate' | 'niche';
       contributions: string[];
       pioneeredTechniques?: string[];
     };
     
     // Cultural Influence
-    culturalSignificance: {
+    culturalSignificance?: {
       domesticPopularity: 'legendary' | 'very-high' | 'high' | 'moderate' | 'low';
       internationalRecognition: 'worldwide' | 'widespread' | 'regional' | 'limited' | 'minimal';
       fanbase: {
@@ -203,7 +215,7 @@ export interface StudioFounder {
     
     // Historical Context
     era: 'origins' | 'foundation' | 'expansion' | 'golden-age' | 'digital-age' | 'current-era';
-    historicalContext: {
+    historicalContext?: {
       economicConditions: string;
       technologicalLandscape: string;
       competitiveEnvironment: string;
@@ -221,9 +233,9 @@ export interface StudioFounder {
     officialWebsite?: string;
     
     // Meta Information
-    lastUpdated: string; // ISO date string
-    dataCompleteness: number; // 0-100 percentage
-    sources: {
+    lastUpdated?: string; // ISO date string
+    dataCompleteness?: number; // 0-100 percentage
+    sources?: {
       type: 'official' | 'news' | 'interview' | 'documentary' | 'book' | 'academic';
       title: string;
       url?: string;
@@ -263,11 +275,18 @@ export interface StudioFounder {
   // Helper types for studio analytics and filtering
   export type StudioStatus = Studio['status'];
   export type StudioEra = Studio['era'];
-  export type StudioImpactLevel = Studio['industryImpact']['level'];
+  export type StudioImpactLevel = NonNullable<Studio['industryImpact']>['level'];
   export type StudioSize = 'major' | 'mid-tier' | 'boutique' | 'independent';
   export type StudioSpecialization = 'generalist' | 'genre-specialist' | 'technical-specialist' | 'artistic-specialist';
-  
-  // Studio collection and filtering interfaces
+
+export interface StudioStats {
+  totalProductions: number;
+  yearsActive: number;
+  employeesAtPeak?: number;
+  averageProductionBudget?: string;
+}
+
+// Studio collection and filtering interfaces
   export interface StudioFilter {
     status?: StudioStatus[];
     era?: StudioEra[];

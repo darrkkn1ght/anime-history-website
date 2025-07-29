@@ -4,17 +4,39 @@
 export interface Era {
     id: string;
     name: string;
+    subtitle?: string;
     period: string;
     startYear: number;
     endYear: number;
+    duration?: number;
+    theme?: any;
     description: string;
     keyCharacteristics: string[];
-    culturalContext: string;
-    technologicalAdvances: string[];
-    colorPalette: EraColorPalette;
-    typography: EraTypography;
-    backgroundImage: string;
+    culturalContext: any;
+    keyMilestones: KeyMilestone[];
+    notableWorks?: string[];
+    pioneers?: any[];
+    technicalInnovations?: string[];
+    marketData?: any;
+    colorPalette?: EraColorPalette;
+    typography?: EraTypography;
+    backgroundImage?: string;
     overlayImage?: string;
+  }
+
+export interface KeyMilestone {
+    year: number;
+    title: string;
+    description: string;
+    significance: string;
+    type: string;
+  }
+
+export interface EraTimeline {
+    totalYears: number;
+    startYear: number;
+    endYear: number;
+    eras: Era[];
   }
   
   export interface EraColorPalette {

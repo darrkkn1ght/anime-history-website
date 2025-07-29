@@ -1,31 +1,83 @@
 // src/types/creator.ts
 // Creator and studio-related TypeScript definitions for the anime history website
 
-export interface Creator {
-    id: string;
-    name: string;
-    nameJapanese?: string;
-    nameRomanized?: string;
-    birthDate?: string;
-    deathDate?: string;
-    nationality: string;
-    biography: string;
-    profileImage: string;
-    roles: CreatorRole[];
-    specialties: string[];
-    influences: string[];
-    legacy: string;
-    awards: Award[];
-    notableWorks: NotableWork[];
-    collaborations: Collaboration[];
-    era: string; // References era.ts EraId
-    activeYears: {
-      start: number;
-      end?: number;
+export type CreatorRole = 
+  | 'director'
+  | 'animator'
+  | 'producer'
+  | 'writer'
+  | 'composer'
+  | 'character-designer'
+  | 'voice-actor'
+  | 'studio-founder';
+
+export type CreatorEra = 
+  | 'origins'
+  | 'foundation'
+  | 'expansion'
+  | 'golden-age'
+  | 'digital-age'
+  | 'current-era';
+
+export interface CreatorStats {
+  totalWorks: number;
+  yearsActive: number;
+  awardsReceived: number;
+  studiosWorkedWith: number;
+}
+
+export interface CreatorIndustryStats {
+  totalCreators: number;
+  livingCreators: number;
+  deceasedCreators: number;
+  byRole: { [key: string]: number };
+  byEra: { [key: string]: number };
+  industryDiversity: {
+    genderBalance: {
+      male: string;
+      femaleDirectors: number;
+      internationalCreators: number;
     };
-  }
+    generationalShift: {
+      veterans: number;
+      midGeneration: number;
+      newGeneration: number;
+    };
+  };
+  influenceMetrics: {
+    totalWorks: number;
+    totalAwards: number;
+    averageCareerLength: number;
+    studioFounders: number;
+  };
+}
+
+export interface Creator {
+  id: string;
+  name: string;
+  nameJapanese?: string;
+  born: number;
+  died: number | null;
+  era: CreatorEra;
+  primaryRole: CreatorRole;
+  secondaryRoles?: CreatorRole[];
+  nationality: string;
+  description: string;
+  keyWorks: string[];
+  achievements: string[];
+  influence: string;
+  philosophy: string;
+  portrait: string;
+  signature: string;
+  colorPalette: {
+    primary: string;
+    secondary: string;
+    accent: string;
+  };
+  stats: CreatorStats;
+}
   
-  export interface CreatorRole {
+  export interface CreatorRoleDetail {
     role: CreatorRoleType;
     description: string;
     yearsActive: {
