@@ -1,0 +1,741 @@
+/* ==========================================================================
+   ANIME HISTORY WEBSITE - TYPOGRAPHY STYLES
+   2025 Modern Typography System
+   ========================================================================== */
+
+/* ==========================================================================
+   FONT IMPORTS & DECLARATIONS
+   ========================================================================== */
+
+/* Import Google Fonts with optimal loading */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap');
+
+/* Font Face Declarations for Local Fonts */
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/NotoSansJP-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Noto Sans JP';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/NotoSansJP-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/Inter-Variable.woff2') format('woff2');
+}
+
+/* ==========================================================================
+   TYPOGRAPHY VARIABLES
+   ========================================================================== */
+
+:root {
+  /* Font Families */
+  --font-primary: 'Inter', 'Inter Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-japanese: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-mono: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+
+  /* Font Sizes - Fluid Typography */
+  --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);     /* 12-14px */
+  --text-sm: clamp(0.875rem, 0.8rem + 0.375vw, 1rem);       /* 14-16px */
+  --text-base: clamp(1rem, 0.9rem + 0.5vw, 1.125rem);       /* 16-18px */
+  --text-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);      /* 18-20px */
+  --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);       /* 20-24px */
+  --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);        /* 24-30px */
+  --text-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.25rem);   /* 30-36px */
+  --text-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3rem);        /* 36-48px */
+  --text-5xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);            /* 48-64px */
+  --text-6xl: clamp(4rem, 3rem + 5vw, 6rem);                 /* 64-96px */
+  --text-7xl: clamp(4.5rem, 3.5rem + 5vw, 7rem);            /* 72-112px */
+  --text-8xl: clamp(6rem, 4rem + 10vw, 9rem);               /* 96-144px */
+
+  /* Line Heights */
+  --leading-none: 1;
+  --leading-tight: 1.25;
+  --leading-snug: 1.375;
+  --leading-normal: 1.5;
+  --leading-relaxed: 1.625;
+  --leading-loose: 2;
+
+  /* Letter Spacing */
+  --tracking-tighter: -0.05em;
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0em;
+  --tracking-wide: 0.025em;
+  --tracking-wider: 0.05em;
+  --tracking-widest: 0.1em;
+
+  /* Font Weights */
+  --font-thin: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
+}
+
+/* ==========================================================================
+   BASE TYPOGRAPHY STYLES
+   ========================================================================== */
+
+/* Base HTML Elements */
+html {
+  font-family: var(--font-primary);
+  font-size: 16px;
+  line-height: var(--leading-normal);
+  font-feature-settings: 'kern' 1, 'liga' 1, 'calt' 1;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-background);
+}
+
+/* ==========================================================================
+   HEADING STYLES
+   ========================================================================== */
+
+/* Display Headings - For Hero Sections */
+.heading-display-1 {
+  font-family: var(--font-display);
+  font-size: var(--text-8xl);
+  font-weight: var(--font-black);
+  line-height: var(--leading-none);
+  letter-spacing: var(--tracking-tighter);
+  color: var(--color-primary);
+  background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+.heading-display-2 {
+  font-family: var(--font-display);
+  font-size: var(--text-7xl);
+  font-weight: var(--font-extrabold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+}
+
+/* Main Headings */
+.heading-1 {
+  font-family: var(--font-primary);
+  font-size: var(--text-6xl);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text-primary);
+}
+
+.heading-2 {
+  font-family: var(--font-primary);
+  font-size: var(--text-5xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text-primary);
+}
+
+.heading-3 {
+  font-family: var(--font-primary);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text-primary);
+}
+
+.heading-4 {
+  font-family: var(--font-primary);
+  font-size: var(--text-3xl);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text-primary);
+}
+
+.heading-5 {
+  font-family: var(--font-primary);
+  font-size: var(--text-2xl);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text-primary);
+}
+
+.heading-6 {
+  font-family: var(--font-primary);
+  font-size: var(--text-xl);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-text-primary);
+}
+
+/* Japanese Headings */
+.heading-japanese {
+  font-family: var(--font-japanese);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wide);
+}
+
+.heading-japanese-large {
+  font-family: var(--font-japanese);
+  font-size: var(--text-4xl);
+  font-weight: var(--font-black);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-wider);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+/* ==========================================================================
+   BODY TEXT STYLES
+   ========================================================================== */
+
+/* Paragraph Styles */
+.text-body-large {
+  font-size: var(--text-lg);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+}
+
+.text-body {
+  font-size: var(--text-base);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text-primary);
+}
+
+.text-body-small {
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  line-height: var(--leading-normal);
+  color: var(--color-text-secondary);
+}
+
+.text-caption {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+}
+
+/* Lead Text */
+.text-lead {
+  font-size: var(--text-xl);
+  font-weight: var(--font-light);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+}
+
+/* Subtitle Text */
+.text-subtitle {
+  font-size: var(--text-lg);
+  font-weight: var(--font-medium);
+  line-height: var(--leading-normal);
+  letter-spacing: var(--tracking-wide);
+  color: var(--color-accent);
+}
+
+/* ==========================================================================
+   ERA-SPECIFIC TYPOGRAPHY
+   ========================================================================== */
+
+/* Origins Era (1900s-1930s) - Vintage Style */
+.text-era-origins {
+  font-family: var(--font-display);
+  font-weight: var(--font-normal);
+  color: #8B4513;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  filter: sepia(0.8) contrast(1.2);
+}
+
+.heading-era-origins {
+  font-family: var(--font-display);
+  font-weight: var(--font-bold);
+  color: #D2691E;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.4);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Foundation Era (1950s-1960s) - Classic TV Style */
+.text-era-foundation {
+  font-family: var(--font-primary);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.heading-era-foundation {
+  font-family: var(--font-primary);
+  font-weight: var(--font-bold);
+  color: #4169E1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Expansion Era (1970s-1980s) - Bold Mecha Style */
+.text-era-expansion {
+  font-family: var(--font-primary);
+  font-weight: var(--font-semibold);
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+
+.heading-era-expansion {
+  font-family: var(--font-primary);
+  font-weight: var(--font-extrabold);
+  color: #FF4500;
+  text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+  letter-spacing: var(--tracking-wider);
+}
+
+/* Golden Age (1990s-2000s) - Polished Style */
+.text-era-golden {
+  font-family: var(--font-primary);
+  font-weight: var(--font-medium);
+  color: var(--color-text-primary);
+  line-height: var(--leading-relaxed);
+}
+
+.heading-era-golden {
+  font-family: var(--font-primary);
+  font-weight: var(--font-bold);
+  background: linear-gradient(45deg, #ffd700, #ffed4e);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+}
+
+/* Digital Age (2010s) - Clean Modern Style */
+.text-era-digital {
+  font-family: var(--font-primary);
+  font-weight: var(--font-normal);
+  color: var(--color-text-primary);
+  line-height: var(--leading-normal);
+}
+
+.heading-era-digital {
+  font-family: var(--font-primary);
+  font-weight: var(--font-semibold);
+  background: linear-gradient(135deg, #00d4ff, #0080ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Current Era (2020s-2025) - Ultra Modern Style */
+.text-era-current {
+  font-family: var(--font-primary);
+  font-weight: var(--font-normal);
+  color: var(--color-text-primary);
+  line-height: var(--leading-normal);
+  font-feature-settings: 'ss01' 1, 'ss02' 1;
+}
+
+.heading-era-current {
+  font-family: var(--font-primary);
+  font-weight: var(--font-bold);
+  background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+  background-size: 300% 300%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   SPECIAL TEXT EFFECTS
+   ========================================================================== */
+
+/* Gradient Text Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Glitch Text Effect */
+.text-glitch {
+  position: relative;
+  color: var(--color-primary);
+  font-weight: var(--font-bold);
+}
+
+.text-glitch::before,
+.text-glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-glitch::before {
+  animation: glitch-1 0.6s infinite;
+  color: #ff0000;
+  z-index: -1;
+}
+
+.text-glitch::after {
+  animation: glitch-2 0.6s infinite;
+  color: #00ffff;
+  z-index: -2;
+}
+
+@keyframes glitch-1 {
+  0%, 14%, 15%, 49%, 50%, 99%, 100% {
+    transform: translate(0);
+  }
+  15%, 49% {
+    transform: translate(-2px, -1px);
+  }
+}
+
+@keyframes glitch-2 {
+  0%, 20%, 21%, 62%, 63%, 99%, 100% {
+    transform: translate(0);
+  }
+  21%, 62% {
+    transform: translate(2px, 1px);
+  }
+}
+
+/* Neon Text Effect */
+.text-neon {
+  color: #fff;
+  text-shadow:
+    0 0 5px currentColor,
+    0 0 10px currentColor,
+    0 0 15px currentColor,
+    0 0 20px #ffd700,
+    0 0 35px #ffd700,
+    0 0 40px #ffd700;
+  animation: neonFlicker 2s infinite alternate;
+}
+
+@keyframes neonFlicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 5px currentColor,
+      0 0 10px currentColor,
+      0 0 15px currentColor,
+      0 0 20px #ffd700,
+      0 0 35px #ffd700,
+      0 0 40px #ffd700;
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+/* Cinematic Text Reveal */
+.text-cinematic-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.text-cinematic-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+  animation: cinematicSweep 2s ease-in-out;
+}
+
+@keyframes cinematicSweep {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: 100%; }
+}
+
+/* ==========================================================================
+   BUTTON & INTERACTIVE TEXT
+   ========================================================================== */
+
+/* Button Text Styles */
+.text-button-primary {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--color-button-primary-text);
+}
+
+.text-button-secondary {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-normal);
+  color: var(--color-button-secondary-text);
+}
+
+/* Link Styles */
+.text-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.text-link:hover {
+  color: var(--color-primary);
+  border-bottom-color: var(--color-primary);
+}
+
+.text-link-underline {
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  transition: all 0.3s ease;
+}
+
+.text-link-underline:hover {
+  color: var(--color-primary);
+  text-decoration-color: var(--color-primary);
+  text-decoration-thickness: 3px;
+}
+
+/* ==========================================================================
+   QUOTE & CITATION STYLES
+   ========================================================================== */
+
+/* Blockquote Styles */
+.text-quote {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-style: italic;
+  font-weight: var(--font-normal);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-secondary);
+  position: relative;
+  padding-left: 2rem;
+}
+
+.text-quote::before {
+  content: '"';
+  position: absolute;
+  left: 0;
+  top: -0.5rem;
+  font-size: var(--text-4xl);
+  font-weight: var(--font-bold);
+  color: var(--color-accent);
+  line-height: 1;
+}
+
+.text-quote-author {
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  font-style: normal;
+  color: var(--color-text-tertiary);
+  margin-top: 1rem;
+}
+
+.text-quote-author::before {
+  content: '— ';
+}
+
+/* ==========================================================================
+   LIST STYLES
+   ========================================================================== */
+
+/* Custom List Styles */
+.text-list {
+  font-family: var(--font-primary);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
+  color: var(--color-text-primary);
+}
+
+.text-list-item {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.text-list-item::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--color-accent);
+  font-weight: var(--font-bold);
+}
+
+/* Timeline List */
+.text-timeline-item {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+.text-timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.375rem;
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.3);
+}
+
+.text-timeline-item::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 1rem;
+  width: 2px;
+  height: calc(100% + 0.5rem);
+  background: linear-gradient(to bottom, var(--color-primary), transparent);
+}
+
+/* ==========================================================================
+   CODE & MONOSPACE STYLES
+   ========================================================================== */
+
+/* Code Text */
+.text-code {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: var(--font-normal);
+  background: rgba(255, 215, 0, 0.1);
+  color: var(--color-accent);
+  padding: 0.125rem 0.25rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.text-code-block {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  background: rgba(0, 0, 0, 0.8);
+  color: #e2e8f0;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid var(--color-accent);
+  overflow-x: auto;
+}
+
+/* ==========================================================================
+   BADGE & LABEL STYLES
+   ========================================================================== */
+
+/* Badge Text */
+.text-badge {
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-wider);
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.text-badge-primary {
+  color: #000;
+}
+
+.text-badge-secondary {
+  color: var(--color-text-primary);
+}
+
+.text-badge-accent {
+  color: var(--color-background);
+}
+
+/* ==========================================================================
+   RESPONSIVE TYPOGRAPHY
+   ========================================================================== */
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .heading-display-1 {
+    font-size: var(--text-6xl);
+    line-height: var(--leading-tight);
+  }
+  
+  .heading-display-2 {
+    font-size: var(--text-5xl);
+  }
+  
+  .text-lead {
+    font-size: var(--text-lg);
+  }
+  
+  .text-quote {
+    font-size: var(--text-lg);
+    padding-left: 1.5rem;
+  }
+  
+  .text-quote::before {
+    font-size: var(--text-3xl);
+    top: -0.25rem;
+  }
+}
+
+/* Tablet Adjustments */
+@media (max-width: 1024px) {
+  .heading-japanese-large {
+    writing-mode: horizontal-tb;
+    text-orientation: mixed;
+  }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
+  body {
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+}
+
+/* Dark Mode Typography Adjustments */
+@media (prefers-color-scheme: dark) {
+  .text-era-origins {
+    filter: sepia(0.6) contrast(1.1) brightness(1.2);
+  }
+  
+  .text-code {
+    background: rgba(255, 215, 0, 0.05);
+    border-color: rgba(255, 215, 0, 0.1);
+  }
+}

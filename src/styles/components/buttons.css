@@ -1,0 +1,329 @@
+/* ============================================
+   BUTTON COMPONENT STYLES
+   Modern 2025 Design System - Anime History Website
+   ============================================ */
+
+/* Base Button Styles */
+.btn-base {
+    @apply relative inline-flex items-center justify-center;
+    @apply px-6 py-3 rounded-xl font-medium text-sm;
+    @apply transition-all duration-300 ease-out;
+    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply overflow-hidden;
+    
+    /* Smooth transform origin */
+    transform-origin: center;
+    
+    /* Prevent text selection */
+    user-select: none;
+    -webkit-user-select: none;
+    
+    /* Hardware acceleration */
+    will-change: transform, opacity, box-shadow;
+  }
+  
+  /* Primary Button - Gold Gradient */
+  .btn-primary {
+    @extend .btn-base;
+    @apply text-black font-semibold;
+    @apply shadow-lg shadow-amber-500/25;
+    @apply focus:ring-amber-400 focus:ring-offset-gray-900;
+    
+    background: linear-gradient(135deg, #ffd700 0%, #ffed4e 50%, #fbbf24 100%);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+  }
+  
+  .btn-primary:hover {
+    @apply shadow-xl shadow-amber-500/40;
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #ffed4e 0%, #ffd700 50%, #f59e0b 100%);
+  }
+  
+  .btn-primary:active {
+    transform: translateY(0) scale(0.98);
+    @apply shadow-md shadow-amber-500/30;
+  }
+  
+  /* Secondary Button - Glassmorphism */
+  .btn-secondary {
+    @extend .btn-base;
+    @apply text-white border border-white/20;
+    @apply shadow-lg shadow-black/25;
+    @apply focus:ring-blue-400 focus:ring-offset-gray-900;
+    
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  
+  .btn-secondary:hover {
+    @apply border-white/30 shadow-xl shadow-black/40;
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  .btn-secondary:active {
+    transform: translateY(0) scale(0.98);
+    background: rgba(255, 255, 255, 0.08);
+  }
+  
+  /* Ghost Button - Transparent Hover */
+  .btn-ghost {
+    @extend .btn-base;
+    @apply text-gray-300 border border-transparent;
+    @apply focus:ring-gray-400 focus:ring-offset-gray-900;
+    
+    background: transparent;
+  }
+  
+  .btn-ghost:hover {
+    @apply text-white border-white/20;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-1px);
+  }
+  
+  .btn-ghost:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  
+  /* Danger Button - Red Gradient */
+  .btn-danger {
+    @extend .btn-base;
+    @apply text-white font-semibold;
+    @apply shadow-lg shadow-red-500/25;
+    @apply focus:ring-red-400 focus:ring-offset-gray-900;
+    
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+  
+  .btn-danger:hover {
+    @apply shadow-xl shadow-red-500/40;
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 50%, #dc2626 100%);
+  }
+  
+  .btn-danger:active {
+    transform: translateY(0) scale(0.98);
+    @apply shadow-md shadow-red-500/30;
+  }
+  
+  /* Button Sizes */
+  .btn-sm {
+    @apply px-4 py-2 text-xs rounded-lg;
+  }
+  
+  .btn-md {
+    @apply px-6 py-3 text-sm rounded-xl;
+  }
+  
+  .btn-lg {
+    @apply px-8 py-4 text-base rounded-2xl;
+  }
+  
+  .btn-xl {
+    @apply px-10 py-5 text-lg rounded-2xl;
+  }
+  
+  /* Icon Button Styles */
+  .btn-icon {
+    @apply p-3 rounded-xl;
+    min-width: 48px;
+    min-height: 48px;
+  }
+  
+  .btn-icon-sm {
+    @apply p-2 rounded-lg;
+    min-width: 36px;
+    min-height: 36px;
+  }
+  
+  /* Floating Action Button */
+  .btn-fab {
+    @extend .btn-primary;
+    @apply fixed bottom-6 right-6 z-50;
+    @apply w-14 h-14 rounded-full p-0;
+    @apply shadow-2xl shadow-amber-500/30;
+    
+    /* Enhanced floating effect */
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  .btn-fab:hover {
+    @apply shadow-2xl shadow-amber-500/50;
+    transform: translateY(-4px) scale(1.05);
+  }
+  
+  /* Button Group Styles */
+  .btn-group {
+    @apply flex rounded-xl overflow-hidden;
+    @apply border border-white/20;
+  }
+  
+  .btn-group .btn-base {
+    @apply rounded-none border-0;
+    @apply border-r border-white/10;
+  }
+  
+  .btn-group .btn-base:last-child {
+    @apply border-r-0;
+  }
+  
+  .btn-group .btn-base:first-child {
+    @apply rounded-l-xl;
+  }
+  
+  .btn-group .btn-base:last-child {
+    @apply rounded-r-xl;
+  }
+  
+  /* Loading State */
+  .btn-loading {
+    @apply cursor-wait;
+    position: relative;
+  }
+  
+  .btn-loading::before {
+    content: '';
+    @apply absolute inset-0 bg-black/20 rounded-xl;
+    backdrop-filter: blur(2px);
+  }
+  
+  .btn-loading::after {
+    content: '';
+    @apply absolute top-1/2 left-1/2;
+    @apply w-4 h-4 border-2 border-white/30;
+    @apply border-t-white rounded-full;
+    transform: translate(-50%, -50%);
+    animation: spin 1s linear infinite;
+  }
+  
+  /* Ripple Effect */
+  .btn-base::before {
+    content: '';
+    @apply absolute inset-0 rounded-xl opacity-0;
+    @apply transition-opacity duration-300;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    transform: scale(0);
+  }
+  
+  .btn-base:active::before {
+    @apply opacity-100;
+    transform: scale(1);
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  }
+  
+  /* Neon Glow Effect for Special Buttons */
+  .btn-neon {
+    @extend .btn-base;
+    @apply text-cyan-300 border border-cyan-400/50;
+    @apply shadow-lg shadow-cyan-500/25;
+    
+    background: rgba(6, 182, 212, 0.1);
+    box-shadow: 
+      0 0 20px rgba(6, 182, 212, 0.3),
+      inset 0 0 20px rgba(6, 182, 212, 0.1);
+  }
+  
+  .btn-neon:hover {
+    @apply text-cyan-200 border-cyan-300 shadow-xl shadow-cyan-500/40;
+    box-shadow: 
+      0 0 30px rgba(6, 182, 212, 0.5),
+      inset 0 0 30px rgba(6, 182, 212, 0.2);
+    transform: translateY(-2px) scale(1.02);
+  }
+  
+  /* Era-Specific Button Themes */
+  .btn-origins {
+    @extend .btn-base;
+    @apply text-amber-100;
+    background: linear-gradient(135deg, #8b4513 0%, #a0522d 50%, #cd853f 100%);
+    border: 1px solid rgba(205, 133, 63, 0.3);
+    box-shadow: 0 4px 20px rgba(139, 69, 19, 0.3);
+  }
+  
+  .btn-digital {
+    @extend .btn-base;
+    @apply text-blue-100;
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+    border: 1px solid rgba(96, 165, 250, 0.3);
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  }
+  
+  .btn-current {
+    @extend .btn-base;
+    @apply text-purple-100;
+    background: linear-gradient(135deg, #7c3aed 0%, #a855f7 50%, #c084fc 100%);
+    border: 1px solid rgba(192, 132, 252, 0.3);
+    box-shadow: 0 4px 20px rgba(168, 85, 247, 0.3);
+  }
+  
+  /* Animations */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+  }
+  
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .btn-base {
+      @apply px-4 py-2 text-xs;
+      min-height: 44px; /* Touch-friendly */
+    }
+    
+    .btn-lg {
+      @apply px-6 py-3 text-sm;
+    }
+    
+    .btn-xl {
+      @apply px-8 py-4 text-base;
+    }
+    
+    .btn-fab {
+      @apply bottom-4 right-4 w-12 h-12;
+    }
+  }
+  
+  /* Dark Mode Adjustments */
+  @media (prefers-color-scheme: dark) {
+    .btn-ghost {
+      @apply text-gray-400;
+    }
+    
+    .btn-ghost:hover {
+      @apply text-gray-200;
+    }
+  }
+  
+  /* High Contrast Mode */
+  @media (prefers-contrast: high) {
+    .btn-base {
+      @apply border-2;
+    }
+    
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+    }
+  }
+  
+  /* Reduced Motion */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-base {
+      @apply transition-none;
+    }
+    
+    .btn-base:hover {
+      transform: none;
+    }
+    
+    .btn-fab {
+      animation: none;
+    }
+  }
