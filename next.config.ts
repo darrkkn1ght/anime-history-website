@@ -11,9 +11,6 @@ const nextConfig = {
     // Enable modern image formats
     formats: ['image/webp', 'image/avif'],
     
-    // Image quality settings
-    quality: 90,
-    
     // Image domains (add your CDN/external image domains here)
     domains: [
       'images.unsplash.com',
@@ -27,9 +24,6 @@ const nextConfig = {
     
     // Image sizes for different breakpoints
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    
-    // Enable placeholder blur
-    placeholder: 'blur',
     
     // Custom loader for optimized images
     loader: 'default',
@@ -167,8 +161,7 @@ const nextConfig = {
     CUSTOM_KEY: process.env.CUSTOM_KEY,
   },
 
-  // Enable SWC minification for better performance
-  swcMinify: true,
+  // Enable SWC minification for better performance (deprecated, enabled by default)
 
   // Enable React strict mode
   reactStrictMode: true,
