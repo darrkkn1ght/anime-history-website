@@ -3,15 +3,11 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Era } from '@/types/era';
 import FadeInView from '@/components/animations/FadeInView';
 import { ParallaxContainer } from '@/components/animations/ParallaxContainer';
 import CinematicTransition from '@/components/animations/CinematicTransition';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { initializeGSAP } from '@/utils/gsap-init';
 
 interface EraSectionProps {
   era: Era;
@@ -101,6 +97,9 @@ export const EraSection: React.FC<EraSectionProps> = ({
   }, [isInView, onEnterView]);
 
   useEffect(() => {
+    // Initialize GSAP
+    initializeGSAP();
+    
     const section = sectionRef.current;
     const background = backgroundRef.current;
     const content = contentRef.current;

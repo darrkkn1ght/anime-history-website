@@ -373,7 +373,7 @@ export interface EraDateRange {
     return era ? era.name : 'Unknown';
   };
   
-  export default {
+  const dateUtils = {
     ERA_DATES,
     formatDate,
     formatRelativeDate,
@@ -395,3 +395,5 @@ export interface EraDateRange {
     formatDuration,
     getJapaneseEra
   };
+
+  export default dateUtils;

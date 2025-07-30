@@ -270,7 +270,7 @@ const TimelineChart: React.FC<TimelineChartProps> = ({ className = '' }) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const index = parseInt(entry.target.getAttribute('data-index') || '0');
-          setVisibleMilestones(prev => new Set([...prev, index]));
+          setVisibleMilestones(prev => new Set(Array.from(prev).concat(index)));
         }
       });
     };

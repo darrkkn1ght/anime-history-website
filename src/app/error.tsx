@@ -71,7 +71,7 @@ export default function Error({ error, reset }: ErrorProps) {
           className="text-gray-300 mb-8 leading-relaxed"
         >
           We encountered an unexpected error while loading the anime timeline. 
-          Don't worry, our team has been notified and we're working to fix it.
+          Don&apos;t worry, our team has been notified and we&apos;re working to fix it.
         </motion.p>
 
         {/* Error Details (Development Mode) */}

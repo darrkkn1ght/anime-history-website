@@ -37,15 +37,15 @@ export function useParallax(options: ParallaxOptions = {}): [RefObject<HTMLEleme
   const [transform, setTransform] = useState<ParallaxTransform>({ y: 0 });
   const rafRef = useRef<number | undefined>(undefined);
 
-  // Easing functions
-  const easingFunctions = {
-    linear: (t: number) => t,
-    easeInOut: (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
-    easeIn: (t: number) => t * t,
-    easeOut: (t: number) => t * (2 - t),
-  };
-
   useEffect(() => {
+    // Easing functions
+    const easingFunctions = {
+      linear: (t: number) => t,
+      easeInOut: (t: number) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t,
+      easeIn: (t: number) => t * t,
+      easeOut: (t: number) => t * (2 - t),
+    };
+
     if (disabled || !elementRef.current) return;
 
     const element = elementRef.current;
@@ -242,7 +242,7 @@ export function useTextParallax(staggerDelay: number = 50) {
   const [isVisible, setIsVisible] = useState(false);
 
   const initializeChars = useCallback((text: string) => {
-    const refs = text.split('').map(() => useRef<HTMLSpanElement>(null));
+    const refs = text.split('').map(() => ({ current: null } as RefObject<HTMLSpanElement | null>));
     setCharRefs(refs);
     return refs;
   }, []);

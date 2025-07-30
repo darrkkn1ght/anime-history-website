@@ -338,7 +338,7 @@ export const getEraImageConfig = (era: string): Partial<OptimizedImageConfig> =>
   return eraConfigs[era] || {};
 };
 
-export default {
+const imageUtils = {
   generateImageSizes,
   createBlurDataURL,
   optimizeImageConfig,
@@ -351,3 +351,5 @@ export default {
   createProgressiveImageConfig,
   getEraImageConfig
 };
+
+export default imageUtils;

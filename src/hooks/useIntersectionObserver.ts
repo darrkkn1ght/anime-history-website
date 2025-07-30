@@ -167,7 +167,7 @@ export function useMultipleIntersectionObserver(
         observer.observe(element);
       }
     });
-  }, [elementsRef.current]);
+  }, [elementsCount]);
   
   return undefined;
 

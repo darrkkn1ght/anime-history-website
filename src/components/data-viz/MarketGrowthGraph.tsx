@@ -129,7 +129,7 @@ export default function MarketGrowthGraph() {
           Anime Industry Growth Metrics
         </h2>
         <p className="text-white/70 text-lg max-w-3xl mx-auto">
-          Comprehensive analysis of the anime industry's explosive growth from 1990 to 2025, 
+          Comprehensive analysis of the anime industry&apos;s explosive growth from 1990 to 2025, 
           showcasing market expansion, platform evolution, and global reach.
         </p>
       </motion.div>
@@ -281,7 +281,6 @@ export default function MarketGrowthGraph() {
                     strokeWidth={2}
                     name="Streaming Revenue"
                     animationDuration={isAnimating ? 2500 : 0}
-                    animationDelay={500}
                   />
                 </AreaChart>
               </ResponsiveContainer>
@@ -371,7 +370,6 @@ export default function MarketGrowthGraph() {
                     fill="#00d4ff" 
                     name="International Revenue"
                     animationDuration={isAnimating ? 1500 : 0}
-                    animationDelay={300}
                   />
                 </BarChart>
               </ResponsiveContainer>

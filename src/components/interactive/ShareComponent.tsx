@@ -2,6 +2,7 @@
 
 import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Image from 'next/image';
 import { 
   Share2, 
   Copy, 
@@ -356,9 +357,11 @@ const ShareComponent: React.FC<ShareComponentProps> = ({
                       exit={{ opacity: 0, height: 0 }}
                     >
                       <div className="bg-white p-4 rounded-lg inline-block">
-                        <img
+                        <Image
                           src={generateQRCode()}
                           alt="QR Code"
+                          width={128}
+                          height={128}
                           className="w-32 h-32"
                         />
                       </div>

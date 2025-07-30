@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Clock, TrendingUp, Film, Calendar, Users, Hash } from 'lucide-react';
+import { debounce } from '@/utils/format-utils';
 
 interface SearchResult {
   id: string;
@@ -114,30 +115,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
-  // Debounced search function
-  const debouncedSearch = useCallback(
-    debounce((searchQuery: string) => {
-      if (searchQuery.trim()) {
-        performSearch(searchQuery);
-      } else {
-        setResults([]);
-        setIsLoading(false);
-      }
-    }, 300),
-    []
-  );
-
-  useEffect(() => {
-    if (query.length > 0) {
-      setIsLoading(true);
-      debouncedSearch(query);
-    } else {
-      setResults([]);
-      setIsLoading(false);
-    }
-  }, [query, debouncedSearch]);
-
-  const performSearch = (searchQuery: string) => {
+  const performSearch = useCallback((searchQuery: string) => {
     // Simulate API search with scoring
     const filteredResults = mockSearchData
       .filter(item => 
@@ -152,7 +130,35 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
       setIsLoading(false);
       onSearch(searchQuery, filteredResults);
     }, 200);
-  };
+  }, [onSearch]);
+
+  // Debounced search function
+  const debouncedSearch = useCallback(
+    (searchQuery: string) => {
+      if (searchQuery.trim()) {
+        performSearch(searchQuery);
+      } else {
+        setResults([]);
+        setIsLoading(false);
+      }
+    },
+    [performSearch]
+  );
+
+  const debouncedSearchWithDelay = useMemo(
+    () => debounce(debouncedSearch, 300),
+    [debouncedSearch]
+  );
+
+  useEffect(() => {
+    if (query.length > 0) {
+      setIsLoading(true);
+      debouncedSearchWithDelay(query);
+    } else {
+      setResults([]);
+      setIsLoading(false);
+    }
+  }, [query, debouncedSearchWithDelay]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -363,7 +369,7 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
             ) : query.length > 0 && !isLoading ? (
               <div className="p-4 text-center">
                 <Search className="w-8 h-8 text-zinc-600 mx-auto mb-2" />
-                <p className="text-sm text-zinc-400">No results found for "{query}"</p>
+                <p className="text-sm text-zinc-400">No results found for &quot;{query}&quot;</p>
                 <p className="text-xs text-zinc-500 mt-1">Try different keywords or check spelling</p>
               </div>
             ) : (
@@ -394,4 +400,38 @@ const SearchComponent: React.FC<SearchComponentProps> = ({
                         </button>
                       ))}
                     </div>
-                  </div
+                  </div>
+                )}
+                {/* Trending Searches */}
+                {trendingSearches.length > 0 && (
+                  <div>
+                    <div className="flex items-center space-x-2 mb-3">
+                      <TrendingUp className="w-4 h-4 text-zinc-500" />
+                      <h4 className="text-xs font-medium text-zinc-400 uppercase tracking-wide">
+                        Trending Searches
+                      </h4>
+                    </div>
+                    <div className="space-y-1">
+                      {trendingSearches.map((search, index) => (
+                        <button
+                          key={index}
+                          onClick={() => handleSearch(search)}
+                          className="
+                            w-full text-left px-3 py-2 text-sm text-zinc-300 
+                            hover:bg-zinc-800/50 rounded transition-colors
+                          "
+                        >
+                          {search}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};

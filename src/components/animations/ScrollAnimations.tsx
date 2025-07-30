@@ -2,13 +2,8 @@
 
 import React, { useEffect, useRef, ReactNode } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-// Register GSAP ScrollTrigger
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { initializeGSAP, getGSAP, getScrollTrigger } from '@/utils/gsap-init';
+// import { useAppReady } from '@/hooks/useAppReady';
 
 // Animation variants for different effects
 const animationVariants = {
@@ -106,36 +101,93 @@ const animationVariants = {
       scale: 1,
       filter: 'blur(0px)',
       transition: {
-        duration: 1.2,
+        duration: 0.8,
         ease: [0.4, 0.0, 0.2, 1]
       }
     }
   },
-  cinematic: {
+  blurIn: {
+    hidden: { 
+      opacity: 0, 
+      filter: 'blur(20px)',
+      scale: 0.9
+    },
+    visible: { 
+      opacity: 1, 
+      filter: 'blur(0px)',
+      scale: 1,
+      transition: {
+        duration: 0.6,
+        ease: [0.4, 0.0, 0.2, 1]
+      }
+    }
+  },
+  slideInFromBottom: {
     hidden: { 
       opacity: 0, 
       y: 100,
-      scale: 0.9,
-      filter: 'brightness(0.3) sepia(1)',
-      clipPath: 'inset(10% 0 10% 0)'
+      rotateX: 15
     },
     visible: { 
       opacity: 1, 
       y: 0,
-      scale: 1,
-      filter: 'brightness(1) sepia(0)',
-      clipPath: 'inset(0% 0 0% 0)',
+      rotateX: 0,
       transition: {
-        duration: 1.5,
-        ease: [0.4, 0.0, 0.2, 1],
-        filter: { duration: 2 },
-        clipPath: { duration: 1.2, ease: 'easeOut' }
+        duration: 0.8,
+        ease: [0.4, 0.0, 0.2, 1]
+      }
+    }
+  },
+  slideInFromTop: {
+    hidden: { 
+      opacity: 0, 
+      y: -100,
+      rotateX: -15
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      rotateX: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.4, 0.0, 0.2, 1]
+      }
+    }
+  },
+  rotateIn: {
+    hidden: { 
+      opacity: 0, 
+      rotate: -180,
+      scale: 0.5
+    },
+    visible: { 
+      opacity: 1, 
+      rotate: 0,
+      scale: 1,
+      transition: {
+        duration: 1,
+        ease: [0.4, 0.0, 0.2, 1]
+      }
+    }
+  },
+  bounceIn: {
+    hidden: { 
+      opacity: 0, 
+      scale: 0.3,
+      y: 50
+    },
+    visible: { 
+      opacity: 1, 
+      scale: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.68, -0.55, 0.265, 1.55]
       }
     }
   }
 };
 
-// Props interfaces
 interface ScrollFadeProps {
   children: ReactNode;
   variant?: keyof typeof animationVariants;
@@ -172,7 +224,6 @@ interface CounterProps {
   decimals?: number;
 }
 
-// Main scroll-triggered fade component with Framer Motion
 export const ScrollFade: React.FC<ScrollFadeProps> = ({
   children,
   variant = 'fadeInUp',
@@ -182,50 +233,38 @@ export const ScrollFade: React.FC<ScrollFadeProps> = ({
   className = '',
   duration
 }) => {
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { 
     amount: threshold, 
     once: triggerOnce,
-    margin: '-50px 0px -50px 0px'
+    margin: '0px 0px -100px 0px'
   });
-  
   const controls = useAnimation();
 
   useEffect(() => {
     if (isInView) {
       controls.start('visible');
-    } else if (!triggerOnce) {
-      controls.start('hidden');
     }
-  }, [isInView, controls, triggerOnce]);
+  }, [isInView, controls]);
 
-  const customVariant = duration ? {
+  const customVariants = duration ? {
     ...animationVariants[variant],
     visible: {
       ...animationVariants[variant].visible,
       transition: {
         ...animationVariants[variant].visible.transition,
-        duration,
-        delay
+        delay,
+        duration: duration / 1000 // Convert to seconds
       }
     }
-  } : {
-    ...animationVariants[variant],
-    visible: {
-      ...animationVariants[variant].visible,
-      transition: {
-        ...animationVariants[variant].visible.transition,
-        delay
-      }
-    }
-  };
+  } : animationVariants[variant];
 
   return (
     <motion.div
       ref={ref}
       initial="hidden"
       animate={controls}
-      variants={customVariant}
+      variants={customVariants}
       className={className}
     >
       {children}
@@ -233,7 +272,6 @@ export const ScrollFade: React.FC<ScrollFadeProps> = ({
   );
 };
 
-// GSAP-powered scroll reveal for more complex animations
 export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   children,
   direction = 'up',
@@ -244,76 +282,50 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   className = ''
 }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = React.useState(false);
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    // Set initial state
-    const initialState: any = {
-      opacity: 0,
-      ease: easing,
-      duration,
-      delay
-    };
-
-    switch (direction) {
-      case 'up':
-        initialState.y = distance;
-        break;
-      case 'down':
-        initialState.y = -distance;
-        break;
-      case 'left':
-        initialState.x = distance;
-        break;
-      case 'right':
-        initialState.x = -distance;
-        break;
-    }
-
-    gsap.set(element, initialState);
-
-    // Create scroll trigger
-    ScrollTrigger.create({
-      trigger: element,
-      start: 'top 85%',
-      end: 'bottom 15%',
-      onEnter: () => {
-        gsap.to(element, {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          duration,
-          delay,
-          ease: easing
-        });
-      },
-      onLeave: () => {
-        gsap.to(element, {
-          opacity: 0,
-          ...initialState,
-          duration: duration * 0.5
-        });
-      },
-      onEnterBack: () => {
-        gsap.to(element, {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          duration: duration * 0.7,
-          ease: easing
-        });
-      }
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === element) {
-          trigger.kill();
+    const initializeAnimation = async () => {
+      if (typeof window === 'undefined') return;
+      
+      try {
+        await initializeGSAP();
+        const gsap = getGSAP();
+        const ScrollTrigger = getScrollTrigger();
+        
+        if (!gsap || !ScrollTrigger) {
+          console.warn('GSAP not available for ScrollReveal');
+          return;
         }
-      });
+
+        gsap.fromTo(ref.current, 
+          {
+            opacity: 0,
+            y: direction === 'up' ? distance : direction === 'down' ? -distance : 0,
+            x: direction === 'left' ? distance : direction === 'right' ? -distance : 0,
+            duration: 0
+          },
+          {
+            opacity: 1,
+            y: 0,
+            x: 0,
+            duration,
+            delay,
+            ease: easing,
+            scrollTrigger: {
+              trigger: ref.current,
+              start: 'top 80%',
+              end: 'bottom 20%',
+              toggleActions: 'play none none reverse'
+            }
+          }
+        );
+      } catch (error) {
+        console.warn('ScrollReveal animation failed:', error);
+      }
     };
+
+    initializeAnimation();
   }, [direction, distance, duration, delay, easing]);
 
   return (
@@ -323,45 +335,44 @@ export const ScrollReveal: React.FC<ScrollRevealProps> = ({
   );
 };
 
-// Typewriter effect with scroll trigger
 export const ScrollTypewriter: React.FC<TypewriterProps> = ({
   text,
   className = '',
   speed = 50,
   delay = 0
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const [displayText, setDisplayText] = React.useState('');
-  const isInView = useInView(ref, { amount: 0.5, once: true });
+  const [currentIndex, setCurrentIndex] = React.useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
-
-    const timeout = setTimeout(() => {
-      let index = 0;
-      const interval = setInterval(() => {
-        setDisplayText(text.slice(0, index + 1));
-        index++;
-        if (index >= text.length) {
-          clearInterval(interval);
-        }
+    if (currentIndex < text.length) {
+      const timer = setTimeout(() => {
+        setDisplayText(prev => prev + text[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
       }, speed);
 
-      return () => clearInterval(interval);
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [currentIndex, text, speed]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setCurrentIndex(0);
+      setDisplayText('');
     }, delay);
 
-    return () => clearTimeout(timeout);
-  }, [isInView, text, speed, delay]);
+    return () => clearTimeout(timer);
+  }, [delay]);
 
   return (
-    <div ref={ref} className={className}>
+    <span className={className}>
       {displayText}
       <span className="animate-pulse">|</span>
-    </div>
+    </span>
   );
 };
 
-// Animated counter with scroll trigger
 export const ScrollCounter: React.FC<CounterProps> = ({
   end,
   duration = 2,
@@ -370,51 +381,48 @@ export const ScrollCounter: React.FC<CounterProps> = ({
   suffix = '',
   decimals = 0
 }) => {
-  const ref = useRef<HTMLDivElement>(null);
   const [count, setCount] = React.useState(0);
-  const isInView = useInView(ref, { amount: 0.5, once: true });
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (!isInView) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          const startTime = Date.now();
+          const startValue = 0;
+          
+          const animate = (timestamp: number) => {
+            const elapsed = timestamp - startTime;
+            const progress = Math.min(elapsed / (duration * 1000), 1);
+            
+            const currentValue = Math.floor(startValue + (end - startValue) * progress);
+            setCount(currentValue);
+            
+            if (progress < 1) {
+              requestAnimationFrame(animate);
+            }
+          };
+          
+          requestAnimationFrame(animate);
+        }
+      },
+      { threshold: 0.5 }
+    );
 
-    let startTime: number;
-    let animationFrame: number;
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
 
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const progress = Math.min((timestamp - startTime) / (duration * 1000), 1);
-      
-      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      const currentCount = easeOutQuart * end;
-      
-      setCount(currentCount);
-      
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate);
-      }
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, [isInView, end, duration]);
-
-  const formattedCount = decimals > 0 
-    ? count.toFixed(decimals)
-    : Math.floor(count).toLocaleString();
+    return () => observer.disconnect();
+  }, [end, duration]);
 
   return (
-    <div ref={ref} className={className}>
-      {prefix}{formattedCount}{suffix}
-    </div>
+    <span ref={ref} className={className}>
+      {prefix}{count.toFixed(decimals)}{suffix}
+    </span>
   );
 };
 
-// Staggered children animation
 interface StaggerProps {
   children: ReactNode;
   staggerDelay?: number;
@@ -426,55 +434,29 @@ export const ScrollStagger: React.FC<StaggerProps> = ({
   staggerDelay = 0.1,
   className = ''
 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { amount: 0.1, once: true });
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: staggerDelay,
-        delayChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { 
-      opacity: 0, 
-      y: 30,
-      scale: 0.9
-    },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: [0.4, 0.0, 0.2, 1]
-      }
-    }
-  };
-
+  const childrenArray = React.Children.toArray(children);
+  
   return (
-    <motion.div
-      ref={ref}
-      variants={containerVariants}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      className={className}
-    >
-      {React.Children.map(children, (child, index) => (
-        <motion.div key={index} variants={itemVariants}>
+    <div className={className}>
+      {childrenArray.map((child, index) => (
+        <motion.div
+          key={index}
+          initial={{ opacity: 0, y: 50 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{
+            duration: 0.6,
+            delay: index * staggerDelay,
+            ease: [0.4, 0.0, 0.2, 1]
+          }}
+          viewport={{ once: true, margin: '-50px' }}
+        >
           {child}
         </motion.div>
       ))}
-    </motion.div>
+    </div>
   );
 };
 
-// Cinematic reveal with film grain effect
 interface CinematicRevealProps {
   children: ReactNode;
   className?: string;
@@ -489,77 +471,49 @@ export const CinematicReveal: React.FC<CinematicRevealProps> = ({
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-
-    // Initial state
-    gsap.set(element, {
-      opacity: 0,
-      scale: 0.95,
-      filter: 'brightness(0.3) contrast(1.2) sepia(0.8)',
-      clipPath: 'inset(10% 0 10% 0)'
-    });
-
-    // Scroll trigger animation
-    ScrollTrigger.create({
-      trigger: element,
-      start: 'top 75%',
-      onEnter: () => {
-        const tl = gsap.timeline();
-        
-        tl.to(element, {
-          opacity: 1,
-          duration: 0.5,
-          ease: 'power2.out'
-        })
-        .to(element, {
-          scale: 1,
-          clipPath: 'inset(0% 0 0% 0)',
-          duration: 1.2,
-          ease: 'power2.out'
-        }, 0.2)
-        .to(element, {
-          filter: 'brightness(1) contrast(1) sepia(0)',
-          duration: 2,
-          ease: 'power2.inOut'
-        }, 0.5);
-      }
-    });
-
-    return () => {
-      ScrollTrigger.getAll().forEach(trigger => {
-        if (trigger.trigger === element) {
-          trigger.kill();
+    const initializeAnimation = () => {
+      if (typeof window === 'undefined') return;
+      
+      try {
+        // Simple CSS-based animation instead of GSAP
+        if (ref.current) {
+          ref.current.style.opacity = '0';
+          ref.current.style.transform = 'scale(0.95) translateY(20px)';
+          
+          setTimeout(() => {
+            if (ref.current) {
+              ref.current.style.transition = 'all 0.8s cubic-bezier(0.4, 0.0, 0.2, 1)';
+              ref.current.style.opacity = '1';
+              ref.current.style.transform = 'scale(1) translateY(0)';
+            }
+          }, 100);
         }
-      });
+      } catch (error) {
+        console.warn('GSAP not available for CinematicReveal');
+      }
     };
+
+    initializeAnimation();
   }, []);
 
   return (
     <div 
-      ref={ref} 
-      className={`relative ${className}`}
+      ref={ref}
+      className={`${className} ${filmGrain ? 'relative' : ''}`}
     >
+      {children}
       {filmGrain && (
         <div 
-          className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay"
+          className="absolute inset-0 pointer-events-none opacity-[0.02] mix-blend-multiply"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-            animation: 'grain 8s steps(10) infinite'
+            backgroundImage: 'url(/images/ui/backgrounds/film-grain-texture.jpg)',
+            backgroundSize: '200px 200px',
+            backgroundRepeat: 'repeat'
           }}
         />
       )}
-      {children}
     </div>
   );
 };
 
-// Export all components
-export default {
-  ScrollFade,
-  ScrollReveal,
-  ScrollTypewriter,
-  ScrollCounter,
-  ScrollStagger,
-  CinematicReveal
-};
+// Components are already exported individually above

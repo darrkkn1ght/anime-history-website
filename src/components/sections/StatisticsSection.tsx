@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   AreaChart, 
   Area, 
@@ -19,10 +18,7 @@ import {
 import { TrendingUp, Globe, DollarSign, Users, PlayCircle, Award } from 'lucide-react';
 import FadeInView from '@/components/animations/FadeInView';
 import { ParallaxContainer } from '@/components/animations/ParallaxContainer';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { initializeGSAP } from '@/utils/gsap-init';
 
 // Sample data - in real app this would come from props or data layer
 const revenueData = [
@@ -182,7 +178,7 @@ const StatCard: React.FC<{
   );
 };
 
-export const StatisticsSection: React.FC<StatisticsSectionProps> = ({ className = '' }) => {
+const StatisticsSection: React.FC<StatisticsSectionProps> = ({ className = '' }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const chartsRef = useRef<HTMLDivElement>(null);
   
@@ -199,6 +195,9 @@ export const StatisticsSection: React.FC<StatisticsSectionProps> = ({ className 
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-20%"]);
 
   useEffect(() => {
+    // Initialize GSAP
+    initializeGSAP();
+    
     const section = sectionRef.current;
     const charts = chartsRef.current;
 
@@ -268,7 +267,7 @@ export const StatisticsSection: React.FC<StatisticsSectionProps> = ({ className 
               transition={{ duration: 0.8, delay: 0.4 }}
             >
               From humble beginnings to a global phenomenon, anime has transformed into 
-              one of the world's most influential entertainment mediums.
+              one of the world&apos;s most influential entertainment mediums.
             </motion.p>
           </div>
         </FadeInView>
@@ -276,7 +275,7 @@ export const StatisticsSection: React.FC<StatisticsSectionProps> = ({ className 
         {/* Key Statistics Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
           {keyStats.map((stat, index) => (
-            <StatCard 
+            <StatCard
               key={stat.title} 
               stat={stat} 
               index={index} 
@@ -411,3 +410,5 @@ export const StatisticsSection: React.FC<StatisticsSectionProps> = ({ className 
     </motion.section>
   );
 };
+
+export default StatisticsSection;

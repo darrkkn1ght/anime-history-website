@@ -476,7 +476,7 @@ const GoldenAgeEra: React.FC = () => {
               <h3 className="text-3xl font-bold text-white mb-6">The Golden Age Legacy</h3>
               
               <p className="text-gray-200 text-lg leading-relaxed mb-8">
-                The 1990s and 2000s represent anime's creative zenith and global breakthrough. 
+                The 1990s and 2000s represent anime&apos;s creative zenith and global breakthrough. 
                 Iconic series established lasting formulas, unforgettable characters captured hearts worldwide, 
                 and anime transformed from niche interest to mainstream cultural force. The foundations laid 
                 during this golden era continue to influence storytelling, character design, and fan culture today.

@@ -266,7 +266,7 @@ const GlobalReachMap: React.FC = () => {
           Global Anime Expansion
         </h2>
         <p className="text-slate-300 text-lg">
-          Interactive timeline of anime's worldwide growth and cultural impact
+          Interactive timeline of anime&apos;s worldwide growth and cultural impact
         </p>
       </div>
 

@@ -3,7 +3,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   Heart, 
   Star, 
@@ -18,10 +17,7 @@ import {
 } from 'lucide-react';
 import FadeInView from '@/components/animations/FadeInView';
 import { ParallaxContainer } from '@/components/animations/ParallaxContainer';
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
+import { initializeGSAP } from '@/utils/gsap-init';
 
 interface ConclusionSectionProps {
   className?: string;
@@ -76,7 +72,7 @@ const timelineHighlights = [
   "2020s: Global cultural phenomenon"
 ];
 
-export const ConclusionSection: React.FC<ConclusionSectionProps> = ({ className = '' }) => {
+const ConclusionSection: React.FC<ConclusionSectionProps> = ({ className = '' }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
   const legacyRef = useRef<HTMLDivElement>(null);
@@ -122,6 +118,9 @@ export const ConclusionSection: React.FC<ConclusionSectionProps> = ({ className 
   };
 
   useEffect(() => {
+    // Initialize GSAP
+    initializeGSAP();
+    
     const timeline = timelineRef.current;
     const legacy = legacyRef.current;
 
@@ -264,9 +263,9 @@ export const ConclusionSection: React.FC<ConclusionSectionProps> = ({ className 
               animate={isInView ? { y: 0, opacity: 1 } : { y: 30, opacity: 0 }}
               transition={{ duration: 1, delay: 0.7 }}
             >
-              "From the first hand-drawn frames to today's digital masterpieces, 
+              &quot;From the first hand-drawn frames to today&apos;s digital masterpieces, 
               anime has woven itself into the fabric of global culture, 
-              creating memories, inspiring dreams, and connecting souls across every continent."
+              creating memories, inspiring dreams, and connecting souls across every continent.&quot;
             </motion.p>
           </motion.div>
         </FadeInView>
@@ -344,7 +343,7 @@ export const ConclusionSection: React.FC<ConclusionSectionProps> = ({ className 
             <div className="max-w-4xl mx-auto backdrop-blur-lg bg-gradient-to-r from-purple-900/20 to-pink-900/20 rounded-3xl border border-white/10 p-8 md:p-12">
               <Heart className="w-12 h-12 text-pink-400 mx-auto mb-6" />
               <p className="text-lg md:text-xl text-white/90 leading-relaxed mb-6">
-                As we stand at the threshold of anime's next chapter, we carry with us 
+                As we stand at the threshold of anime&apos;s next chapter, we carry with us 
                 the magic of every frame, the emotion of every story, and the dreams 
                 of every creator who dared to imagine worlds beyond reality.
               </p>
@@ -406,3 +405,5 @@ export const ConclusionSection: React.FC<ConclusionSectionProps> = ({ className 
     </motion.section>
   );
 };
+
+export default ConclusionSection;

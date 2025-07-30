@@ -71,8 +71,8 @@ export default function NotFound() {
           transition={{ delay: 0.6 }}
           className="text-lg text-gray-300 mb-8 leading-relaxed max-w-md mx-auto"
         >
-          The page you're looking for seems to have vanished into another dimension. 
-          Let's get you back to exploring anime history!
+          The page you&apos;re looking for seems to have vanished into another dimension. 
+          Let&apos;s get you back to exploring anime history!
         </motion.p>
 
         {/* Anime Character Illustration (Text-based) */}

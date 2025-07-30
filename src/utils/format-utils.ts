@@ -261,3 +261,18 @@ export const toTitleCase = (str: string): string => {
     if (diffMonth < 12) return `${diffMonth}mo ago`;
     return `${diffYear}y ago`;
   };
+
+/**
+ * Debounce function to limit the rate at which a function can fire
+ */
+export const debounce = <T extends (...args: any[]) => void>(
+  func: T,
+  wait: number
+): ((...args: Parameters<T>) => void) => {
+  let timeout: NodeJS.Timeout;
+  
+  return (...args: Parameters<T>) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => func(...args), wait);
+  };
+};

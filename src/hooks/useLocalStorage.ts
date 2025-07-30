@@ -290,14 +290,14 @@ export const useSearchState = () => {
         filters: { ...prev.filters, ...filters },
       }));
     },
-    [setSearchState]
+    [setSearchState, searchState]
   );
 
   const updateSort = useCallback(
     (sortBy: typeof searchState.sortBy, sortOrder: typeof searchState.sortOrder) => {
       setSearchState(prev => ({ ...prev, sortBy, sortOrder }));
     },
-    [setSearchState]
+    [setSearchState, searchState]
   );
 
   const clearRecentSearches = useCallback(() => {

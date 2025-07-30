@@ -138,7 +138,7 @@ const SlideInPanel: React.FC<SlideInPanelProps> = ({
         overlayControls.start('hidden');
       }
     }
-  }, [isInView, controls, overlayControls, triggerOnce, hasAnimated, onAnimationStart]);
+  }, [isInView, controls, overlayControls, triggerOnce, hasAnimated, onAnimationStart, overlay]);
 
   const handleAnimationComplete = () => {
     onAnimationComplete?.();

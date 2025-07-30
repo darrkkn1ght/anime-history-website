@@ -288,9 +288,9 @@ const ExpansionEra: React.FC = () => {
             <h3 className="text-2xl font-bold text-white mb-4">Legacy of the Expansion Era</h3>
             <p className="text-gray-300 leading-relaxed mb-6">
               The 1970s and 1980s established anime as a serious artistic medium capable of 
-              complex storytelling and mature themes. Science fiction became anime's signature genre, 
+              complex storytelling and mature themes. Science fiction became anime&apos;s signature genre, 
               while mecha shows created a template still used today. This era proved that animation 
-              could be more than children's entertainment, setting the stage for anime's global expansion.
+              could be more than children&apos;s entertainment, setting the stage for anime&apos;s global expansion.
             </p>
             
             <div className="flex flex-wrap justify-center gap-4">
